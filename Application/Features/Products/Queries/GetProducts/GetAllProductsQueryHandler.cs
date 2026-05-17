@@ -20,6 +20,7 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
         public async Task<List<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var products = await _context.Products
+                .Where(p => p.IsDeleted == false)
                 .Select(p =>
                 new ProductDto{
                     Id=p.Id,

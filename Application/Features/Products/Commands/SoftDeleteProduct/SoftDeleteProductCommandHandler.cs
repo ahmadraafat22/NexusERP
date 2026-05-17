@@ -1,0 +1,37 @@
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using NexusERP.Application.Abstractions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NexusERP.Application.Features.Products.Commands.SoftDeleteProduct
+{
+    internal class SoftDeleteProductCommandHandler : IRequestHandler<SoftDelelteProductCommand, bool>
+    {
+        private readonly IAppDbContext _context;
+        public SoftDeleteProductCommandHandler(IAppDbContext context)
+        {
+            _context = context;
+        }
+        public async Task<bool> Handle(SoftDelelteProductCommand request, CancellationToken cancellationToken)
+        {
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+            if (product == null)
+            {
+                throw new Exception("not found Product");
+            }
+            if (product.IsDeleted)
+            {
+                throw new Exception("This product already Deleted"!);
+            }
+            product.IsDeleted = true;
+
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+    }
+}

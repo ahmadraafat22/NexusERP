@@ -1,8 +1,13 @@
 
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
+using NexusERP.Application.Common.Behaviors;
 using NexusERP.Application.Features.Products.commands.createProduct;
 using NexusERP.Infrasructure.Persistence;
+using NexusERP.WebApi.Middlewares;
 
 namespace NexusERP
 {
@@ -21,6 +26,16 @@ namespace NexusERP
             builder.Services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly)
             );
+            // register fluent validation in ioc 
+            builder.Services.AddValidatorsFromAssembly(
+                typeof(CreateProductCommand).Assembly);
+            // register pipline behavior 
+            builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            // cancel asp.net core defualt validation 
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -36,6 +51,8 @@ namespace NexusERP
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 
