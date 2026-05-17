@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NexusERP.Application.Features.Products.Commands
+namespace NexusERP.Application.Features.Products.Commands.CreateProduct
 {
     public class CreateProductValidator:AbstractValidator<CreateProductCommand>
     {

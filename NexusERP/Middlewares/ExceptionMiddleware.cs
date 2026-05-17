@@ -30,7 +30,7 @@ namespace NexusERP.WebApi.Middlewares
 
             var response = new
             {
-                messege = "Somthing went wrong",
+                message = "Somthing went wrong",
                 errors = new List<string> { ex.Message } 
             };
 
@@ -41,7 +41,7 @@ namespace NexusERP.WebApi.Middlewares
                        (int)HttpStatusCode.BadRequest;
                     response = new
                     {
-                        messege = "Validation failed",
+                        message = "Validation failed",
                         errors = validationException
                         .Errors
                         .Select(e=>e.ErrorMessage)

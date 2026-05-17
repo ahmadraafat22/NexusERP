@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using MediatR;
 namespace NexusERP.Application.Features.Products.Commands.SoftDeleteProduct
 {
-    public class SoftDelelteProductCommand:IRequest<bool>
+    public class SoftDeleteProductCommand:IRequest<bool>
     {
         public Guid Id { get; set; }
 
-        public SoftDelelteProductCommand(Guid Id)
+        public SoftDeleteProductCommand(Guid Id)
         {
             this.Id = Id;
         }

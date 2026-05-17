@@ -56,7 +56,7 @@ namespace NexusERP.WebApi.Controllers
         [HttpDelete("{Id:guid}")]
         public async Task<IActionResult> DeleteProduct(Guid Id) 
         {
-            await _mediator.Send(new SoftDelelteProductCommand (Id));
+            await _mediator.Send(new SoftDeleteProductCommand (Id));
 
             return NoContent();
         }

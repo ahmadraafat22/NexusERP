@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace NexusERP.Application.Features.Products.Commands.SoftDeleteProduct
 {
-    internal class SoftDeleteProductCommandHandler : IRequestHandler<SoftDelelteProductCommand, bool>
+    public class SoftDeleteProductCommandHandler : IRequestHandler<SoftDeleteProductCommand, bool>
     {
         private readonly IAppDbContext _context;
         public SoftDeleteProductCommandHandler(IAppDbContext context)
         {
             _context = context;
         }
-        public async Task<bool> Handle(SoftDelelteProductCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(SoftDeleteProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);

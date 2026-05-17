@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
 using NexusERP.Application.Common.Behaviors;
 using NexusERP.Application.Features.Products.commands.createProduct;
+using NexusERP.Application.Features.Products.Commands.SoftDeleteProduct;
+using NexusERP.Application.Features.Products.Commands.UpdateProduct;
 using NexusERP.Infrasructure.Persistence;
 using NexusERP.WebApi.Middlewares;
 
