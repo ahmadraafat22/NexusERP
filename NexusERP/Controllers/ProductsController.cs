@@ -24,13 +24,13 @@ namespace NexusERP.WebApi.Controllers
         {
             var Id = await _mediator.Send(command);
 
-            return CreatedAtAction("",Id);
+            return Ok(Id);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
-            var products = await _mediator.Send(new GetAllProductsQuery());
+            var products = await _mediator.Send(query);
             return Ok(products);
         }
 

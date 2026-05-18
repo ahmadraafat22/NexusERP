@@ -64,7 +64,8 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
                 Data=products,
                 PageNumber=request.PageNumber,
                 PageSize=request.PageSize,
-                TotalCount=totalCounts
+                TotalCount=totalCounts,
+                TotalPages = (int)Math.Ceiling((double)totalCounts / (double)request.PageSize)
             };
 
             return result;

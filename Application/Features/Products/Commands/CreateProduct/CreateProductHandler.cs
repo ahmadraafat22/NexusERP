@@ -30,7 +30,6 @@ namespace NexusERP.Application.Features.Products.Commands.CreateProduct
             // manual mapping 
             var product = new Product()
             {
-                Id = Guid.NewGuid(),
                 Name = request.Name,
                 Description = request.Description,
                 SKU = request.SKU,

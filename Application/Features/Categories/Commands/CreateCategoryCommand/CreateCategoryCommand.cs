@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace NexusERP.Domain.Entities
+using MediatR;
+namespace NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand
 {
-    public class Category:BaseEntity
+    public class CreateCategoryCommand:IRequest<Guid>
     {
         public string   Name        { get; set; }
         public string?  Description { get; set; } = "";
-        public ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }
