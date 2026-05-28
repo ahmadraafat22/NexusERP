@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
 using NexusERP.Domain.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace NexusERP.Infrasructure.Persistence
 {
-    public class AppDbContext:DbContext,IAppDbContext
+    public class AppDbContext:IdentityDbContext<AppUser>,IAppDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {

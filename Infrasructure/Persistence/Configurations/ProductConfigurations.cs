@@ -11,7 +11,6 @@ namespace NexusERP.Infrasructure.Persistence.Configurations
 {
     public class ProductConfigurations : IEntityTypeConfiguration<Product>
     {
-        [Obsolete]
         public void Configure(EntityTypeBuilder<Product> builder)
         {
             builder.HasKey(p => p.Id);

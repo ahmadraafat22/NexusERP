@@ -4,6 +4,7 @@ using MediatR;
 using NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand;
 using NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery;
 using NexusERP.Application.Features.Categories.Queries.GetCategoryById;
+using Microsoft.AspNetCore.Authorization;
 namespace NexusERP.WebApi.Controllers
 {
     [Route("api/[controller]")]
@@ -24,6 +25,7 @@ namespace NexusERP.WebApi.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GettAllCategories([FromQuery] GetAllCategoryQuery query)
         {
             var allCategories = await _mediator.Send(query);
