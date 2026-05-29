@@ -30,18 +30,21 @@ namespace NexusERP.Application.Features.Auth.Commands.LoginUser
         {
             var user =await _userManger.FindByEmailAsync(request.Email);
 
-            if (user != null) 
+            if (user == null)
             {
-                var validPassword = await _userManger.CheckPasswordAsync(user, request.Password);
-                if (!validPassword) 
-                {
-                    throw new Exception("Invalid email or password");
-                }
-
-                return await _jwtservice.GenerateToken(user);
+                throw new Exception("Invalid email or password");
             }
 
-            throw new Exception("Invalid email or password");
+            var validPassword = await _userManger.CheckPasswordAsync(user, request.Password);
+            if (!validPassword) 
+            {
+                throw new Exception("Invalid email or password");
+            }
+
+            return await _jwtservice.GenerateToken(user);
+            
+
+            
         }
         
     }

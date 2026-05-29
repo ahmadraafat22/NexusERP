@@ -38,9 +38,12 @@ namespace NexusERP.Infrasructure.Services
         {
             tokenClaims.Add(new Claim(ClaimTypes.Role, role));
         }
-        // signIncredintials 
+            // signIncredintials 
+        if (string.IsNullOrEmpty(_config["JWT:Key"])) {
+            throw new Exception("There is no key ");
+        }
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
-
+        
         SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
                 issuer: _config["JWT:Iss"],
