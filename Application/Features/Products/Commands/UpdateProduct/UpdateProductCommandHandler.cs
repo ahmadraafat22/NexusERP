@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NexusERP.Application.Features.Products.Commands.UpdateProduct
 {

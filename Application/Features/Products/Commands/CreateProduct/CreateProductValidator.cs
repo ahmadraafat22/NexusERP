@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using NexusERP.Application.Features.Products.commands.createProduct;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NexusERP.Application.Features.Products.Commands.CreateProduct
 {

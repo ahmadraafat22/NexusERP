@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MediatR;
 using NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand;
 using NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery;

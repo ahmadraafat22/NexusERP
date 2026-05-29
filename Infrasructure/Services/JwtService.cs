@@ -3,13 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using NexusERP.Application.Abstractions;
 using NexusERP.Domain.Entities;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NexusERP.Infrasructure.Services
 {
@@ -38,7 +34,7 @@ namespace NexusERP.Infrasructure.Services
         {
             tokenClaims.Add(new Claim(ClaimTypes.Role, role));
         }
-            // signIncredintials 
+        // signIncredintials 
         if (string.IsNullOrEmpty(_config["JWT:Key"])) {
             throw new Exception("There is no key ");
         }

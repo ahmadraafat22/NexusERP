@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NexusERP.Application.Features.Auth.Commands.LoginUser;
 using NexusERP.Application.Features.Auth.Commands.RegisterUser;

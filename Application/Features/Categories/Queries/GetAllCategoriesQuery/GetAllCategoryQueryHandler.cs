@@ -2,13 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
 using NexusERP.Application.Common.CustomResponse;
-using NexusERP.Application.Features.Products.Queries.GetProducts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+
 
 namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
 {

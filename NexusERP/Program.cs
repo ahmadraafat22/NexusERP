@@ -1,4 +1,3 @@
-
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -7,14 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
 using NexusERP.Application.Common.Behaviors;
 using NexusERP.Application.Features.Products.commands.createProduct;
-using NexusERP.Application.Features.Products.Commands.SoftDeleteProduct;
-using NexusERP.Application.Features.Products.Commands.UpdateProduct;
 using NexusERP.Domain.Entities;
 using NexusERP.Infrasructure.Persistence;
 using NexusERP.WebApi.Middlewares;
 using NexusERP.Infrasructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 

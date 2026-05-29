@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Abstractions;
 using NexusERP.Application.Features.Products.Queries.GetProducts;
+
 namespace NexusERP.Application.Features.Products.Queries.GetProductById
 {
     public class GetProductByIdQueryHandler:IRequestHandler<GetProductByIdQuery,ProductDto>

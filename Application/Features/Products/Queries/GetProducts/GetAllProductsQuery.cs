@@ -1,11 +1,5 @@
-﻿using Azure;
-using MediatR;
+﻿using MediatR;
 using NexusERP.Application.Common.CustomResponse;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NexusERP.Application.Features.Products.Queries.GetProducts
 {

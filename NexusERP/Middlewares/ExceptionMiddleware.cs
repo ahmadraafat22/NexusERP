@@ -1,8 +1,6 @@
-﻿
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 namespace NexusERP.WebApi.Middlewares
 {
     public class ExceptionMiddleware
