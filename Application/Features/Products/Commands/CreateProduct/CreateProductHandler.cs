@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Features.Products.commands.createProduct;
 using NexusERP.Domain.Entities;
 

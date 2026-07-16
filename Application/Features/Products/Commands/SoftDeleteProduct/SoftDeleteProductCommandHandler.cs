@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 
 namespace NexusERP.Application.Features.Products.Commands.SoftDeleteProduct
 {

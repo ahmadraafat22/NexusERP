@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Domain.Entities;
 
 namespace NexusERP.Infrasructure.Persistence

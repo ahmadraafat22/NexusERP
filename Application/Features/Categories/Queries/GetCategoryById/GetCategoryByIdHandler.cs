@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery;
 using System;
 using System.Collections.Generic;

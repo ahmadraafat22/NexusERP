@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NexusERP.Domain.Entities;
 
-namespace NexusERP.Application.Abstractions
+namespace NexusERP.Domain.Interfaces
 {
     public interface IAppDbContext
     {

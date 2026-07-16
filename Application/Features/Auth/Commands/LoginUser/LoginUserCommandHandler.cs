@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Domain.Entities;
 
 namespace NexusERP.Application.Features.Auth.Commands.LoginUser

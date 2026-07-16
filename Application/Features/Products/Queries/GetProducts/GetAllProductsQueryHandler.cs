@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Common.CustomResponse;
 
 namespace NexusERP.Application.Features.Products.Queries.GetProducts
@@ -20,7 +20,8 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
             if (request.PageSize > 50)
                 request.PageSize = 50;
             var query = _context.Products
-                .AsQueryable();
+                .AsQueryable()
+                .Where(p=>p.IsDeleted==false);
             if (!string.IsNullOrEmpty(request.Search)) 
             {
                 query = query.Where(p => EF.Functions.Like(p.Name,$"%{request.Search.Trim()}%"));

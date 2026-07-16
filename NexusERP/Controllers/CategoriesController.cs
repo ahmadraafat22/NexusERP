@@ -8,6 +8,7 @@ namespace NexusERP.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -24,8 +25,7 @@ namespace NexusERP.WebApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GettAllCategories([FromQuery] GetAllCategoryQuery query)
+        public async Task<IActionResult> GetAllCategories([FromQuery] GetAllCategoryQuery query)
         {
             var allCategories = await _mediator.Send(query);
 

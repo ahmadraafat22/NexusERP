@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Domain.Entities;
 
 namespace NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand

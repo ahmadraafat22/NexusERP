@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Features.Products.Queries.GetProducts;
 
 namespace NexusERP.Application.Features.Products.Queries.GetProductById
@@ -18,7 +18,7 @@ namespace NexusERP.Application.Features.Products.Queries.GetProductById
         {
             var product = await _context.Products
                 .Where(p=>p.IsDeleted==false)
-                .Where(p => p.Id == request.Id)
+                .Where(p => p.Id == request.Id&& p.IsDeleted==false)
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,

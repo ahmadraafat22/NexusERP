@@ -1,17 +1,17 @@
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Application.Abstractions;
+using Microsoft.IdentityModel.Tokens;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Common.Behaviors;
 using NexusERP.Application.Features.Products.commands.createProduct;
 using NexusERP.Domain.Entities;
 using NexusERP.Infrasructure.Persistence;
-using NexusERP.WebApi.Middlewares;
 using NexusERP.Infrasructure.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using NexusERP.WebApi.Middlewares;
 using System.Text;
 
 namespace NexusERP
@@ -61,23 +61,35 @@ namespace NexusERP
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            builder.Services.AddAuthentication(options => {
+            // add authantication jwt settings
+            builder.Services.AddAuthentication(options =>
+            {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            }).AddJwtBearer(options => {
+            }).AddJwtBearer(options => 
+            {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
-                options.TokenValidationParameters = new()
+                options.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["JWT:ISS"],
+                    ValidIssuer = builder.Configuration["JWT:Iss"],
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["JWT:Aud"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+                    ValidateIssuerSigningKey=true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+                    ValidateLifetime=true
+                    
                 };
+            
+            });
+            builder.Services.AddCors(options => {
+                options.AddPolicy("MyPolicy", optionbuilder =>
+                {
+                    optionbuilder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+                });
             });
             var app = builder.Build();
 
@@ -103,6 +115,7 @@ namespace NexusERP
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("MyPolicy");
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
