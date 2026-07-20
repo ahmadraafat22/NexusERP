@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Common.Behaviors;
 using NexusERP.Application.Features.Products.commands.createProduct;
 using NexusERP.Domain.Entities;
+using NexusERP.Domain.Interfaces;
 using NexusERP.Infrasructure.Persistence;
 using NexusERP.Infrasructure.Services;
 using NexusERP.WebApi.Middlewares;
@@ -34,13 +34,13 @@ namespace NexusERP
                 cfg.RegisterServicesFromAssembly(typeof(CreateProductCommand).Assembly)
             );
 
+
+            // register Jwt service in ioc 
+            builder.Services.AddScoped<IJwtService, JwtService>();
+
             // register fluent validation in ioc 
             builder.Services.AddValidatorsFromAssembly(
                 typeof(CreateProductCommand).Assembly);
-
-            // register Jwt service in ioc 
-            builder.Services.AddScoped<IJwtService,JwtService>();
-
             // register pipline behavior 
             builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
@@ -54,7 +54,6 @@ namespace NexusERP
             builder.Services.AddIdentity<AppUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -68,7 +67,7 @@ namespace NexusERP
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
-            }).AddJwtBearer(options => 
+            }).AddJwtBearer(options =>
             {
                 options.SaveToken = true;
                 options.RequireHttpsMetadata = true;
@@ -78,14 +77,15 @@ namespace NexusERP
                     ValidIssuer = builder.Configuration["JWT:Iss"],
                     ValidateAudience = true,
                     ValidAudience = builder.Configuration["JWT:Aud"],
-                    ValidateIssuerSigningKey=true,
+                    ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-                    ValidateLifetime=true
-                    
+                    ValidateLifetime = true
+
                 };
-            
+
             });
-            builder.Services.AddCors(options => {
+            builder.Services.AddCors(options =>
+            {
                 options.AddPolicy("MyPolicy", optionbuilder =>
                 {
                     optionbuilder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();

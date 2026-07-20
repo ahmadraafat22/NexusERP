@@ -20,7 +20,7 @@ namespace NexusERP.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CreateProductCommand command) 
+        public async Task<IActionResult> Create([FromBody] CreateProductCommand command)
         {
             var Id = await _mediator.Send(command);
 
@@ -42,21 +42,18 @@ namespace NexusERP.WebApi.Controllers
         }
 
         [HttpPut("{Id:guid}")]
-        public async Task<IActionResult> UpdateProduct(Guid Id , [FromBody]UpdateProductCommand command)
+        public async Task<IActionResult> UpdateProduct(Guid Id, [FromBody] UpdateProductCommand command)
         {
-            if(Id!=command.Id)
-            {
-                return BadRequest("Id mismatched");
-            }
+            command.Id = Id;// the same id in url and body 
 
             await _mediator.Send(command);
             return NoContent();
         }
 
         [HttpDelete("{Id:guid}")]
-        public async Task<IActionResult> DeleteProduct(Guid Id) 
+        public async Task<IActionResult> DeleteProduct(Guid Id)
         {
-            await _mediator.Send(new SoftDeleteProductCommand (Id));
+            await _mediator.Send(new SoftDeleteProductCommand(Id));
 
             return NoContent();
         }

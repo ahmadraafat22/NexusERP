@@ -1,6 +1,7 @@
-﻿using System.Net;
+﻿using FluentValidation;
+using NexusERP.Application.Common.Exceptions;
+using System.Net;
 using System.Text.Json;
-using FluentValidation;
 namespace NexusERP.WebApi.Middlewares
 {
     public class ExceptionMiddleware
@@ -17,19 +18,19 @@ namespace NexusERP.WebApi.Middlewares
             {
                 await _next(context);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                await HandleExceptionAsync(context,ex);
+                await HandleExceptionAsync(context, ex);
             }
         }
-        private static Task HandleExceptionAsync(HttpContext context , Exception ex)
+        private static async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             context.Response.ContentType = "application/json";
 
             var response = new
             {
                 message = "Somthing went wrong",
-                errors = new List<string> { ex.Message } 
+                errors = new List<string> { ex.Message }
             };
 
             switch (ex)
@@ -42,18 +43,36 @@ namespace NexusERP.WebApi.Middlewares
                         message = "Validation failed",
                         errors = validationException
                         .Errors
-                        .Select(e=>e.ErrorMessage)
+                        .Select(e => e.ErrorMessage)
                         .ToList()
+                    };
+                    break;
+
+                case NotFoundException notFoundException:
+                    context.Response.StatusCode = (int)StatusCodes.Status404NotFound;
+                    response = new
+                    {
+                        message = notFoundException.Message,
+                        errors = new List<string>()
+                    };
+                    break;
+
+                case UnauthorizedAccessException:
+                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                    response = new
+                    {
+                        message = "Unauthorized",
+                        errors = new List<string>()
                     };
                     break;
 
                 default:
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
-            
+
             }
             var json = JsonSerializer.Serialize(response);
-            return context.Response.WriteAsync(json);
+            await context.Response.WriteAsync(json);
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace NexusERP.Application.Features.Products.Commands.UpdateProduct
 {
-    public class UpdateProductValidator:AbstractValidator<UpdateProductCommand>
+    public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
     {
         public UpdateProductValidator()
         {

@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand;
+using NexusERP.Application.Features.Categories.Commands.UpdateCategory;
 using NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery;
 using NexusERP.Application.Features.Categories.Queries.GetCategoryById;
-using Microsoft.AspNetCore.Authorization;
 namespace NexusERP.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles = "Admin")]
     public class CategoriesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace NexusERP.WebApi.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody]CreateCategoryCommand command)
+        public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryCommand command)
         {
             var Id = await _mediator.Send(command);
             return Ok(Id);
@@ -38,6 +38,13 @@ namespace NexusERP.WebApi.Controllers
             var category = await _mediator.Send(new GetCategoryById(Id));
 
             return Ok(category);
+        }
+        [HttpPut("{Id:guid}")]
+        public async Task<IActionResult> UpdateCategory(Guid Id, UpdateCategoryCommand command)
+        {
+            command.Id = Id;
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }
