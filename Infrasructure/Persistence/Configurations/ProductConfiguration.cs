@@ -4,7 +4,7 @@ using NexusERP.Domain.Entities;
 
 namespace NexusERP.Infrasructure.Persistence.Configurations
 {
-    public class ProductConfigurations : IEntityTypeConfiguration<Product>
+    public class ProductConfiguration : IEntityTypeConfiguration<Product>
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {

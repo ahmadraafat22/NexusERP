@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NexusERP.Application.Features.Categories.Commands.CreateCategoryCommand;
+using NexusERP.Application.Features.Categories.Commands.SoftDeleteCategory;
 using NexusERP.Application.Features.Categories.Commands.UpdateCategory;
 using NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery;
 using NexusERP.Application.Features.Categories.Queries.GetCategoryById;
@@ -44,6 +45,12 @@ namespace NexusERP.WebApi.Controllers
         {
             command.Id = Id;
             await _mediator.Send(command);
+            return NoContent();
+        }
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteCategory(Guid id)
+        {
+            await _mediator.Send(new SoftDeleteCategoryCommand(id));
             return NoContent();
         }
     }
