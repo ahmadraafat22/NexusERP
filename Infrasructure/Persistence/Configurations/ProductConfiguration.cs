@@ -13,6 +13,7 @@ namespace NexusERP.Infrasructure.Persistence.Configurations
             builder.HasIndex(p => p.Barcode).IsUnique();
             builder.HasIndex(p => p.SKU)
                 .IsUnique();
+            builder.HasQueryFilter(p => !p.IsDeleted);
             builder.Property(p => p.SKU).IsRequired();
             builder.Property(p => p.Barcode).IsRequired();
             builder.Property(p => p.SellingPrice).HasPrecision(18, 2);

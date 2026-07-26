@@ -15,9 +15,9 @@ namespace NexusERP.Application.Features.Products.Commands.UpdateProduct
         public async Task<bool> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _context.Products
-                .FirstOrDefaultAsync(p=> p.Id==request.Id,cancellationToken);
+                .FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
 
-            if(product == null)
+            if (product == null)
             {
                 throw new Exception("Product not found ");
             }

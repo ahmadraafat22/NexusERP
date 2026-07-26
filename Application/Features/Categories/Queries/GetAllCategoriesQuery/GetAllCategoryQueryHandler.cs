@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Common.CustomResponse;
+using NexusERP.Domain.Interfaces;
 
 
 namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
@@ -15,14 +15,14 @@ namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
             _context = context;
         }
 
-        public async  Task<PaginatedResponse<GetCategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedResponse<GetCategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
         {
             if (request.PageNumber < 1)
                 request.PageNumber = 1;
             if (request.PageSize > 50)
                 request.PageSize = 50;
             var query = _context.Categories
-                .AsQueryable().Where(c=>c.IsDeleted==false);
+                .AsQueryable();
             if (!string.IsNullOrEmpty(request.Search))
             {
                 query = query.Where(p => EF.Functions.Like(p.Name, $"%{request.Search.Trim()}%"));
@@ -39,7 +39,7 @@ namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description=c.Description
+                    Description = c.Description
                 })
                 .ToListAsync();
 
@@ -49,7 +49,7 @@ namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,
                 TotalCount = totalCounts,
-                TotalPages =(int) Math.Ceiling((double)totalCounts / (double)request.PageSize)
+                TotalPages = (int)Math.Ceiling((double)totalCounts / (double)request.PageSize)
             };
 
             return result;

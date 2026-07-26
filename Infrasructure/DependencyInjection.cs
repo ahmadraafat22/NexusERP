@@ -54,7 +54,7 @@ namespace NexusERP.Infrasructure
                 };
 
             });
-
+            services.AddScoped<ICodeGeneratorService, CodeGeneratorService>();
             return services;
         }
     }

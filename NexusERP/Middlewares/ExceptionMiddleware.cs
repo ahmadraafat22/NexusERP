@@ -63,6 +63,11 @@ namespace NexusERP.WebApi.Middlewares
                     break;
                 default:
                     context.Response.StatusCode = 500;
+                    //response = new
+                    //{
+                    //    message = ex.ToString(),
+                    //    errors = new List<string>()
+                    //};
                     break;
 
             }

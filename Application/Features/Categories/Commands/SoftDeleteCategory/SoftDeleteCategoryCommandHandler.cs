@@ -20,7 +20,7 @@ namespace NexusERP.Application.Features.Categories.Commands.SoftDeleteCategory
             }
             if (category.IsDeleted)
             {
-                throw new Exception("this category is already deleted!");
+                throw new Exception($"this {nameof(request)} already deleted!");
             }
             category.IsDeleted = true;
             await _context.SaveChangesAsync(cancellationToken);

@@ -20,6 +20,10 @@ namespace NexusERP.Application.Features.Categories.Commands.UpdateCategory
             {
                 throw new NotFoundException(nameof(Category), request.Id);
             }
+            if (category.IsDeleted)
+            {
+                throw new Exception($"this {nameof(request)} already deleted!");
+            }
             // mapping new data 
             category.Name = request.Name;
             category.Description = request.Description;

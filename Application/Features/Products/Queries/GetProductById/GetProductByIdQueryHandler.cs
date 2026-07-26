@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using NexusERP.Domain.Interfaces;
 using NexusERP.Application.Features.Products.Queries.GetProducts;
+using NexusERP.Domain.Interfaces;
 
 namespace NexusERP.Application.Features.Products.Queries.GetProductById
 {
-    public class GetProductByIdQueryHandler:IRequestHandler<GetProductByIdQuery,ProductDto>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, ProductDto>
     {
         private readonly IAppDbContext _context;
 
@@ -17,8 +17,7 @@ namespace NexusERP.Application.Features.Products.Queries.GetProductById
         public async Task<ProductDto> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _context.Products
-                .Where(p=>p.IsDeleted==false)
-                .Where(p => p.Id == request.Id&& p.IsDeleted==false)
+                .Where(p => p.Id == request.Id)
                 .Select(p => new ProductDto
                 {
                     Id = p.Id,
@@ -27,10 +26,10 @@ namespace NexusERP.Application.Features.Products.Queries.GetProductById
                     Description = p.Description,
                     CategoryName = p.Category.Name
                 })
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(cancellationToken);
             if (product == null)
             {
-                 throw new Exception("product not found ");
+                throw new Exception("product not found ");
             }
             return product;
         }
