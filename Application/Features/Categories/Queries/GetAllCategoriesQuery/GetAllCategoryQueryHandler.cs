@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Common.CustomResponse;
+using NexusERP.Application.Common.Extensions;
 using NexusERP.Domain.Interfaces;
 
 
@@ -17,23 +18,19 @@ namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
 
         public async Task<PaginatedResponse<GetCategoryDto>> Handle(GetAllCategoryQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageNumber < 1)
-                request.PageNumber = 1;
-            if (request.PageSize > 50)
-                request.PageSize = 50;
-            var query = _context.Categories
+
+            var query = _context.Categories.AsNoTracking()
                 .AsQueryable();
             if (!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(p => EF.Functions.Like(p.Name, $"%{request.Search.Trim()}%"));
+                var search = request.Search.Trim();
+                query = query.Where(p => EF.Functions.Like(p.Name, $"%{search}%"));
 
             }
 
-            int totalCounts = await query.CountAsync();
-            var categories = await query
+
+            return await query
                 .OrderBy(c => c.Id)
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
                 .Select(c =>
                 new GetCategoryDto
                 {
@@ -41,18 +38,11 @@ namespace NexusERP.Application.Features.Categories.Queries.GetAllCategoriesQuery
                     Name = c.Name,
                     Description = c.Description
                 })
-                .ToListAsync();
+                .ToPaginatedResponseAsync(request.PageNumber, request.PageSize, cancellationToken);
 
-            PaginatedResponse<GetCategoryDto> result = new PaginatedResponse<GetCategoryDto>()
-            {
-                Data = categories,
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                TotalCount = totalCounts,
-                TotalPages = (int)Math.Ceiling((double)totalCounts / (double)request.PageSize)
-            };
 
-            return result;
+
+
         }
     }
 }

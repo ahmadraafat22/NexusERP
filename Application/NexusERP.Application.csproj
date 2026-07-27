@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Domain\NexusERP.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Customers\Commands\UpdateCustomer\" />
-  </ItemGroup>
-
 </Project>

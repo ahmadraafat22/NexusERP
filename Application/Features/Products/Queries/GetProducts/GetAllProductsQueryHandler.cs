@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NexusERP.Application.Common.CustomResponse;
+using NexusERP.Application.Common.Extensions;
 using NexusERP.Domain.Interfaces;
 
 namespace NexusERP.Application.Features.Products.Queries.GetProducts
@@ -15,16 +16,13 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
         }
         public async Task<PaginatedResponse<ProductDto>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            if (request.PageNumber < 1)
-                request.PageNumber = 1;
-            if (request.PageSize > 50)
-                request.PageSize = 50;
-            var query = _context.Products
+
+            var query = _context.Products.AsNoTracking()
                 .AsQueryable();
             if (!string.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(p => EF.Functions.Like(p.Name, $"%{request.Search.Trim()}%"));
-
+                var search = request.Search.Trim();
+                query = query.Where(p => EF.Functions.Like(p.Name, $"%{search}%"));
             }
             if (request.MaxPrice != null)
             {
@@ -34,11 +32,8 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
             {
                 query = query.Where(p => p.SellingPrice >= request.MinPrice);
             }
-            int totalCounts = await query.CountAsync();
-            var products = await query
+            return await query
                 .OrderBy(p => p.Id)
-                .Skip((request.PageNumber - 1) * request.PageSize)
-                .Take(request.PageSize)
                 .Select(p =>
                 new ProductDto
                 {
@@ -48,18 +43,8 @@ namespace NexusERP.Application.Features.Products.Queries.GetProducts
                     StockQuantity = p.StockQuantity,
                     CategoryName = p.Category.Name
                 })
-                .ToListAsync();
+                .ToPaginatedResponseAsync(request.PageNumber, request.PageSize, cancellationToken);
 
-            PaginatedResponse<ProductDto> result = new PaginatedResponse<ProductDto>()
-            {
-                Data = products,
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                TotalCount = totalCounts,
-                TotalPages = (int)Math.Ceiling((double)totalCounts / (double)request.PageSize)
-            };
-
-            return result;
 
         }
     }
