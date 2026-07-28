@@ -14,11 +14,15 @@ namespace NexusERP.Infrasructure.Persistence
         public DbSet<Category> Categories { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // This searching for IEntityTypeConfiguration to apply configuration on it automaticlly 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             modelBuilder.HasSequence<int>("CustomerSequence")
+                .StartsAt(1)
+                .IncrementsBy(1);
+            modelBuilder.HasSequence<int>("SupplierSequence")
                 .StartsAt(1)
                 .IncrementsBy(1);
             base.OnModelCreating(modelBuilder);

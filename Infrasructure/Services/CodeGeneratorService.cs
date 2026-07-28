@@ -43,6 +43,8 @@ namespace NexusERP.Infrasructure.Services
             {
                 case CodeType.Customer:
                     return "CUS";
+                case CodeType.Supplier:
+                    return "SUP";
                 default:
                     throw new ArgumentException("not supported type ");
             }

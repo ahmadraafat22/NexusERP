@@ -3,5 +3,6 @@
     public enum CodeType
     {   //CustomerSequence
         Customer,
+        Supplier
     }
 }

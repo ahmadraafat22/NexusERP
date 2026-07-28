@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace NexusERP.Application.Features.Customers.Commands.CreateCustomer
+namespace NexusERP.Application.Features.Suppliers.Commands.CreateSupplier
 {
-    public class CreateCustomerValidator : AbstractValidator<CreateCustomerCommand>
+    public class CreateSupplierValidator : AbstractValidator<CreateSupplierCommand>
     {
-        public CreateCustomerValidator()
+        public CreateSupplierValidator()
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Name can't be empty")
@@ -23,7 +23,6 @@ namespace NexusERP.Application.Features.Customers.Commands.CreateCustomer
                 .EmailAddress()
                 .When(c => !string.IsNullOrWhiteSpace(c.Email))
                 .WithMessage("Invalid email format");
-
         }
     }
 }

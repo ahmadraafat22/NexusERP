@@ -4,7 +4,7 @@ using NexusERP.Domain.Entities;
 
 namespace NexusERP.Infrasructure.Persistence.Configurations
 {
-    public class CustomeConfiguration : IEntityTypeConfiguration<Customer>
+    public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
