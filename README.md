@@ -281,7 +281,7 @@ Backend .NET Developer
 
 GitHub: https://github.com/ahmadraafat22
 
-LinkedIn: *(Add your LinkedIn profile here)*
+LinkedIn: www.linkedin.com/in/ahmed-raafat-8a1a2a286
 
 ---
 
